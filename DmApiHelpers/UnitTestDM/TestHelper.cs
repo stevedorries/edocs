@@ -24,12 +24,14 @@ using System.Text;
 
 namespace UnitTestDM {
     class DMProdEnvironment {
-        internal const string Server = "OURPRODSERVER";
-        internal const string Library = "OURLIBRARY";
+        internal const string Server = "ORLOT01";
+        internal const string Library = "DR_LOANS";
     }
 
     class DMTestEnvironment {
-        internal const string Server = "OURTESTSERVER";
-        internal const string Library = "OURLIBRARY";
+        internal const string Server = "ORLOT01";
+        internal const string Library = "DR_LOANS";
+        internal const string UserName = "web_service";
+        internal const string Password = "OpenText";
     }
 }

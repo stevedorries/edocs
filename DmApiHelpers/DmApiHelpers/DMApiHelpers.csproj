@@ -33,10 +33,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Hummingbird.DM.Extensions.Interop.DOCSObjects">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Open Text\DM Extensions\Hummingbird.DM.Extensions.Interop.DOCSObjects.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
     <Reference Include="Hummingbird.DM.Server.Interop.PCDClient">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Open Text\DM API\Hummingbird.DM.Server.Interop.PCDClient.dll</HintPath>
       <EmbedInteropTypes>False</EmbedInteropTypes>

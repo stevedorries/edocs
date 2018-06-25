@@ -26,11 +26,28 @@ using System.Text;
 namespace DMApiHelpers {
     public enum SortOrder { Descending = 0, Ascending = 1 }
 
-    public class SearchInfo {
+    public class SearchInfo
+    {
+        private int? _maximumRows = null;
+
         public string SearchObject { get; set; }
         public Dictionary<string, string> Criteria { get; set; }
         public Dictionary<string, SortOrder> OrderBy { get; set; }
         public List<string> ReturnProperties { get; set; }
+        /// <summary>
+        /// Limits the amount of results
+        /// </summary>
+        public int? MaximumRows
+        {
+            get => _maximumRows;
+            set
+            {
+                if (!value.HasValue || value.Value <= 0)
+                    _maximumRows = null;
+                else
+                    _maximumRows = value.Value;                
+            }
+        }
     }
 
     public class SearchRow : Dictionary<string, object> {
@@ -47,8 +64,9 @@ namespace DMApiHelpers {
                 throw new ArgumentNullException();
 
             var search = new PCDSearch();
-            search.SetDST(Dst);
+            search.SetDST(DocumentSecurityToken);
             search.SetSearchObject(info.SearchObject);
+            
             foreach(var pair in info.Criteria)
                 search.AddSearchCriteria(pair.Key, pair.Value);
             foreach(var prop in info.ReturnProperties)
@@ -56,7 +74,8 @@ namespace DMApiHelpers {
             if(info.OrderBy != null)
                 foreach(var pair in info.OrderBy)
                     search.AddOrderByProperty(pair.Key, (int)pair.Value);
-
+            if (info.MaximumRows.HasValue)
+                search.SetMaxRows(info.MaximumRows.Value);
             if(search.Execute() != 0 || search.ErrNumber != 0)
                 throw new DMApiException(string.Format("PCDSearch.Execute failed with error {0}: {1}", search.ErrNumber, search.ErrDescription));
             var results = new SearchResults();

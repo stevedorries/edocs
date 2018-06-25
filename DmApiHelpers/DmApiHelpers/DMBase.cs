@@ -26,8 +26,8 @@ using System.Threading.Tasks;
 namespace DMApiHelpers {
     public abstract class DMBase {
         public const int S_OK = 0;
-        public string Dst { get; set; }
-        public string Library { get; set; }
+        public string DocumentSecurityToken { get; set; }
+        public string LibraryName { get; set; }
 
     }
 }

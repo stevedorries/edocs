@@ -27,14 +27,15 @@ namespace UnitTestDM {
     public class DMLoginTest {
         [TestMethod]
         public void TestDst() {
-            DMLogin.Password = TestHelperSecure.MyPassword;
+            DMLogin.Password = TestHelperSecure.MyAdmPassword;
+            DMLogin.UserName = TestHelperSecure.MyAdmLogin;
             string dst = DMLogin.Dst;
             Assert.IsFalse(string.IsNullOrWhiteSpace(dst));
         }
 
         [TestMethod]
         public void TestUserName() {
-            string expected = @"mylogin";
+            string expected = @"web_service";
             string user = DMLogin.UserName;
             Assert.AreEqual(expected, user);
         }

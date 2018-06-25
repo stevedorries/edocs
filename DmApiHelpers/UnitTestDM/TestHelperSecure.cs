@@ -26,7 +26,7 @@ namespace UnitTestDM {
     class TestHelperSecure {
         internal const string MyPassword = "********";
         
-        internal const string MyAdmLogin = "myadminlogin";
-        internal const string MyAdmPassword = "********";
+        internal const string MyAdmLogin = "web_service";
+        internal const string MyAdmPassword = "OpenText";
     }
 }

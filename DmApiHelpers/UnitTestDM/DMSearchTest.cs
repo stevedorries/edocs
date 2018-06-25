@@ -73,24 +73,32 @@ namespace UnitTestDM {
 
         [TestMethod]
         public void TestSearchOneDoc() {
-            DMLogin.ServerName = DMProdEnvironment.Server;
-            DMLogin.Password = TestHelperSecure.MyPassword;
+            DMLogin.ServerName = DMTestEnvironment.Server;
+            DMLogin.UserName = DMTestEnvironment.UserName;
+            DMLogin.Password = DMTestEnvironment.Password;
 
             // a known document in our library
             string expectedDocNum = "12387815";
             string expectedName = "TEST 2";
 
             var info = new SearchInfo {
-                SearchObject = "STANDARD_S",
+                SearchObject = "DR_LOAN_QBE",
                 Criteria = new Dictionary<string, string> {
-                    { "DOCNUMBER", expectedDocNum }
+                    { "CLIENT_ID", "222" }
                 },
                 ReturnProperties = new List<string> {
-                    "DOCNUMBER", "DOCNAME"
+                    "%VERSION_ID",
+                    "DOCNUMBER",
+                    "DOCNAME",
+                    "TYPE_ID",
+                    "APPLICATION",
+                    "AUDIT_NO",
+                    "LAST_EDIT_DATE",
+                    "LAST_EDIT_TIME"
                 }
             };
 
-            var search = new DMSearch() { Dst = DMLogin.Dst, Library = DMLogin.Library };
+            var search = new DMSearch() { DocumentSecurityToken = DMLogin.Dst, LibraryName = DMLogin.Library };
             var result = search.Search(info);
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.Rows);
@@ -123,7 +131,7 @@ namespace UnitTestDM {
                 }
             };
 
-            var search = new DMSearch() { Dst = DMLogin.Dst };
+            var search = new DMSearch() { DocumentSecurityToken = DMLogin.Dst };
             var result = search.Search(info);
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.Rows);

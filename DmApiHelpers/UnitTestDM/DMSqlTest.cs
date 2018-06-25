@@ -30,7 +30,7 @@ namespace UnitTestDM {
             DMLogin.Password = TestHelperSecure.MyPassword;
             var cmd = "select application from apps where default_extension = 'DOC'";
 
-            var sql = new DMSql { Dst = DMLogin.Dst, Library = DMLogin.Library };
+            var sql = new DMSql { DocumentSecurityToken = DMLogin.Dst, LibraryName = DMLogin.Library };
             var result = sql.ExecuteSql(cmd);
             Assert.IsNotNull(result);
             Assert.AreEqual(1, result.ColumnCount);

@@ -44,7 +44,7 @@ namespace UnitTestDM {
                 { "CUSTOM_PROP", "NEW VAL" }
             };
 
-            DMDocument doc = new DMDocument() { Dst = dst, Library = DMLogin.Library };
+            DMDocument doc = new DMDocument() { DocumentSecurityToken = dst, LibraryName = DMLogin.Library };
 
             // create
             var docInfo = doc.CreateProfile(profile);
@@ -81,7 +81,7 @@ namespace UnitTestDM {
                 new TrusteeInfo("DOCS_USERS", TrusteeType.Group, AccessRights.ReadOnly)
             };
 
-            DMDocument doc = new DMDocument() { Dst = dst, Library = DMLogin.Library };
+            DMDocument doc = new DMDocument() { DocumentSecurityToken = dst, LibraryName = DMLogin.Library };
 
             // create
             var docInfo = doc.CreateProfile(profile);
@@ -110,7 +110,7 @@ namespace UnitTestDM {
                     { "TYPIST_ID", "NKHORIN" }
                 };
 
-            DMDocument doc = new DMDocument() { Dst = dst, Library = DMLogin.Library };
+            DMDocument doc = new DMDocument() { DocumentSecurityToken = dst, LibraryName = DMLogin.Library };
 
             // create
             var docInfo = doc.CreateProfile(profile);
@@ -145,7 +145,7 @@ namespace UnitTestDM {
                     { "AUTHOR_ID", "JDOE" },
                     { "TYPIST_ID", "JDOE" }
                 };
-            DMDocument doc = new DMDocument() { Dst = dst, Library = DMLogin.Library };
+            DMDocument doc = new DMDocument() { DocumentSecurityToken = dst, LibraryName = DMLogin.Library };
 
             string fileName = Path.GetTempFileName();
             File.WriteAllText(fileName, "hello world!\r\n");
@@ -166,13 +166,14 @@ namespace UnitTestDM {
         [TestMethod]
         public void TestFindLinks() {
             DMLogin.ServerName = DMTestEnvironment.Server;
-            DMLogin.Password = TestHelperSecure.MyPassword;
+            DMLogin.UserName = DMTestEnvironment.UserName;
+            DMLogin.Password = DMTestEnvironment.Password;
             string dst = DMLogin.Dst;
 
             // we know an existing document-folder link in our library
             int docNumber = 12071903;
             string expectedLink = "799470242";
-            DMDocument doc = new DMDocument() { Dst = dst, Library = DMLogin.Library };
+            DMDocument doc = new DMDocument() { DocumentSecurityToken = dst, LibraryName = DMLogin.Library };            
             var res = doc.FindLinks(docNumber);
             Assert.IsNotNull(res);
             Assert.AreEqual(1, res.RowCount);
@@ -182,7 +183,8 @@ namespace UnitTestDM {
         [TestMethod]
         public void TestFetchTrustees() {
             DMLogin.ServerName = DMTestEnvironment.Server;
-            DMLogin.Password = TestHelperSecure.MyPassword;
+            DMLogin.UserName = DMTestEnvironment.UserName;
+            DMLogin.Password = DMTestEnvironment.Password;
             string dst = DMLogin.Dst;
 
             // we know the trustees of this existing document
@@ -194,7 +196,7 @@ namespace UnitTestDM {
                 new TrusteeInfo("NKHORIN", TrusteeType.Person, AccessRights.FullAccess),
             };
 
-            DMDocument doc = new DMDocument() { Dst = dst, Library = DMLogin.Library };
+            DMDocument doc = new DMDocument() { DocumentSecurityToken = dst, LibraryName = DMLogin.Library };
             var actual = doc.FetchTrustees(docNumber);
             Assert.AreEqual(expected.Length, actual.Length);
             foreach(var exp in expected)
@@ -219,7 +221,7 @@ namespace UnitTestDM {
                 new TrusteeInfo("NKHORIN", TrusteeType.Person, AccessRights.FullAccess),
             };
 
-            DMDocument doc = new DMDocument() { Dst = dst, Library = DMLogin.Library };
+            DMDocument doc = new DMDocument() { DocumentSecurityToken = dst, LibraryName = DMLogin.Library };
             var actual = doc.FetchTrustees(docNumber);
             Assert.AreEqual(expected.Count, actual.Length);
             foreach(var exp in expected)
